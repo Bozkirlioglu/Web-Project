@@ -1,18 +1,18 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const users = []; // This should be replaced with a real database
+const User = require('./models/User');
+const sequelize = require('./db');
 
 const SECRET_KEY = 'your-secret-key';
 
 class AuthService {
   async register(username, password) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    users.push({ username, password: hashedPassword });
+    await User.create({ username, password: hashedPassword });
   }
 
   async login(username, password) {
-    const user = users.find(u => u.username === username);
+    const user = await User.findOne({ where: { username } });
     if (!user) {
       throw new Error('User not found');
     }
@@ -25,6 +25,20 @@ class AuthService {
     const token = jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: '1h' });
     return token;
   }
+
+  getCurrentUser() {
+    // Implement this method based on your application's requirements
+  }
+
+  isAuthenticated() {
+    const user = this.getCurrentUser();
+    if (user && user.token) {
+      const decodedToken = jwtDecode(user.token);
+      return decodedToken.exp * 1000 > Date.now();
+    }
+    return false;
+  }
 }
 
-module.exports = new AuthService();
+const authServiceInstance = new AuthService();
+module.exports = authServiceInstance;
