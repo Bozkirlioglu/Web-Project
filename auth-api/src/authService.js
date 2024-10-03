@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { jwtDecode } = require('jwt-decode');
+const jwtDecode = require('jwt-decode');
 const User = require('./models/User');
 const sequelize = require('./db');
 
