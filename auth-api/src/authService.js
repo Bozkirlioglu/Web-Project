@@ -16,7 +16,7 @@ class AuthService {
       const user = await User.create({ password: hashedPassword, Name, email, isActive: false });
 
       const token = jwt.sign({ email: user.email }, EMAIL_SECRET_KEY, { expiresIn: '15m' });
-      const activationUrl = `http://localhost:3000/auth/activate/${token}`;
+      const activationUrl = `http://130.61.209.76:3000/auth/activate/${token}`;
 
       // Send email
       const transporter = nodemailer.createTransport({
