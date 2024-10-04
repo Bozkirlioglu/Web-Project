@@ -4,9 +4,10 @@ const jwtDecode = require('jwt-decode');
 const nodemailer = require('nodemailer');
 const User = require('./models/User');
 const sequelize = require('./db');
+require('dotenv').config();
 
-const SECRET_KEY = 'your-secret-key';
-const EMAIL_SECRET_KEY = 'your-email-secret-key';
+const SECRET_KEY = process.env.SECRET_KEY;
+const EMAIL_SECRET_KEY = process.env.EMAIL_SECRET_KEY;
 
 class AuthService {
   async register(password, Name, email) {
@@ -21,13 +22,13 @@ class AuthService {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'your-email@gmail.com',
-          pass: 'your-email-password',
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
         },
       });
 
       const mailOptions = {
-        from: 'your-email@gmail.com',
+        from: process.env.EMAIL_USER,
         to: user.email,
         subject: 'Account Activation',
         text: `Please activate your account by clicking the following link: ${activationUrl}`,
