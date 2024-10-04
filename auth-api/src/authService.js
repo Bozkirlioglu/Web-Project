@@ -7,13 +7,13 @@ const sequelize = require('./db');
 const SECRET_KEY = 'your-secret-key';
 
 class AuthService {
-  async register(username, password) {
+  async register(password, Name, email) {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ username, password: hashedPassword });
+    await User.create({ password: hashedPassword, Name, email });
   }
 
-  async login(username, password) {
-    const user = await User.findOne({ where: { username } });
+  async login(email, password) {
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       throw new Error('User not found');
     }
@@ -23,19 +23,23 @@ class AuthService {
       throw new Error('Invalid password');
     }
 
-    const token = jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ email: user.email }, SECRET_KEY, { expiresIn: '1h' });
     return token;
   }
 
-  getCurrentUser() {
-    // Implement this method based on your application's requirements
+  getCurrentUser(token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      return decodedToken;
+    } catch (error) {
+      return null;
+    }
   }
 
-  isAuthenticated() {
-    const user = this.getCurrentUser();
-    if (user && user.token) {
-      const decodedToken = jwtDecode(user.token);
-      return decodedToken.exp * 1000 > Date.now();
+  isAuthenticated(token) {
+    const user = this.getCurrentUser(token);
+    if (user) {
+      return user.exp * 1000 > Date.now();
     }
     return false;
   }

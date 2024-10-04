@@ -3,9 +3,9 @@ const router = express.Router();
 const authService = require('./authService');
 
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const token = await authService.login(username, password);
+    const token = await authService.login(email, password);
     res.json({ token });
   } catch (error) {
     res.status(401).json({ message: 'Invalid credentials' });
@@ -13,9 +13,9 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { password, Name, email} = req.body;
   try {
-    await authService.register(username, password);
+    await authService.register(password, Name, email);
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error registering user' });
