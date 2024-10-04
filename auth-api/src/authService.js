@@ -10,6 +10,7 @@ class AuthService {
   async register(password, Name, email) {
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({ password: hashedPassword, Name, email });
+    print("User created successfully");
   }
 
   async login(email, password) {
