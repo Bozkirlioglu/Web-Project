@@ -3,15 +3,12 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
 const User = sequelize.define('User', {
-  idtbl_Users: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    unique: true,
-    primaryKey: true
-  },
+
   Uid: {
     type: DataTypes.UUID,
     allowNull: false,
+    unique: true,
+    primaryKey: true,
     defaultValue: DataTypes.UUIDV4 
   },
   Name: {
