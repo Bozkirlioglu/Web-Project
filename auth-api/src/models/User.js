@@ -24,12 +24,14 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  isadmin: {
+  isAdmin: {
     type: DataTypes.BOOLEAN,
+    allowNull: false,
     defaultValue: false
   },
-  isactive: {
+  isActive: {
     type: DataTypes.BOOLEAN,
+    allowNull: false,
     defaultValue: false
   },
 }, 

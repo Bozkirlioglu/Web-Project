@@ -19,15 +19,15 @@ class AuthService {
 
       // Send email
       const transporter = nodemailer.createTransport({
-        service: 'Yandex',
+        service: 'gmail',
         auth: {
-          user: 'noreply@esgpartner.com',
-          pass: 'Pass_here',
+          user: 'your-email@gmail.com',
+          pass: 'your-email-password',
         },
       });
 
       const mailOptions = {
-        from: 'noreply@esgpartner.com',
+        from: 'your-email@gmail.com',
         to: user.email,
         subject: 'Account Activation',
         text: `Please activate your account by clicking the following link: ${activationUrl}`,
@@ -47,8 +47,10 @@ class AuthService {
       if (!user) {
         throw new Error('User not found');
       }
+      console.log('Activating user:', user); // Debugging line
       user.isActive = true;
       await user.save();
+      console.log('User activated:', user); // Debugging line
     } catch (error) {
       console.error('Error in activate method:', error);
       throw error;
