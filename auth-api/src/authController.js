@@ -13,7 +13,8 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const { password, Name, email} = req.body;
+  const { password, Name, email } = req.body;
+  console.log('Received registration data:', { password, Name, email }); // Debugging line
   try {
     await authService.register(password, Name, email);
     res.status(201).json({ message: 'User registered successfully' });

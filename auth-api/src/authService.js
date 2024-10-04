@@ -9,6 +9,7 @@ const SECRET_KEY = 'your-secret-key';
 class AuthService {
   async register(password, Name, email) {
     try {
+      console.log('Registering user with:', { password, Name, email }); // Debugging line
       const hashedPassword = await bcrypt.hash(password, 10);
       await User.create({ password: hashedPassword, Name, email });
     } catch (error) {
