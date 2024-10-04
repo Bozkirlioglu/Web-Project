@@ -20,7 +20,7 @@ class AuthService {
 
       // Send email
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: 'Yandex',
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS,
