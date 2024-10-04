@@ -29,9 +29,11 @@ const User = sequelize.define('User', {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
-  
-  tableName: 'tbl_Users',
-  
+}, 
+{  
+  tableName: 'tbl_Users',{
+  timestamps: false,
+
 });
 
 module.exports = User;
