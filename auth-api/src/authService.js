@@ -8,9 +8,13 @@ const SECRET_KEY = 'your-secret-key';
 
 class AuthService {
   async register(password, Name, email) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ password: hashedPassword, Name, email });
-    print("User created successfully");
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await User.create({ password: hashedPassword, Name, email });
+    } catch (error) {
+      console.error('Error in register method:', error);
+      throw error;
+    }
   }
 
   async login(email, password) {
