@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Correct named import
 
-const API_URL = 'http://130.61.209.76:3000/auth';
+const API_URL = 'http://130.61.209.76:3000/auth/';
 
 class AuthService {
-  login(username, password) {
-    return axios.post(`${API_URL}/login`, { username, password })
+  login(email, password) {
+    return axios.post(`${API_URL}/login`, { email, password })
       .then(response => {
         if (response.data.token) {
           localStorage.setItem('user', JSON.stringify(response.data));
